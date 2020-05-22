@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+#dtable {
+  grid-template-columns: repeat(7, auto);
+}
