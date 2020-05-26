@@ -30,20 +30,8 @@ class Table extends Component {
     return (
       <div>
         <BootstrapTable data={this.props.data}>
-          <TableHeaderColumn isKey dataField='id'>
-            ID
-          </TableHeaderColumn>
-          <TableHeaderColumn dataField='name'>
-            Name
-          </TableHeaderColumn>
-          <TableHeaderColumn dataField='email'>
-            Email 
-          </TableHeaderColumn>
-          <TableHeaderColumn dataField="username">
-            User Name
-          </TableHeaderColumn>
-          <TableHeaderColumn dataField='website'>
-            Website
+          <TableHeaderColumn isKey dataField='number'>
+            BlockId
           </TableHeaderColumn>
         </BootstrapTable>
       </div>

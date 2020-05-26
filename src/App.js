@@ -23,7 +23,7 @@ class App extends Component {
 
   componentDidMount() {
     //fetch method returns a promise!!! to fullfill that promise, we will use .then()
-    fetch("https://jsonplaceholder.typicode.com/users")
+    fetch("https://derek-flask.projects.tait.tech/block-info/0x999")
       .then(res => res.json())
       .then(result => {
         //We get result when promise is fullfilled
