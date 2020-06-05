@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import Table from './components/Table'
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 import Button from 'react-bootstrap/Button';
 
 class App extends Component {
@@ -10,7 +9,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      users: []
+      users: ["btc","eth","ada","xmr"]
     };
   }
 
@@ -42,19 +41,21 @@ class App extends Component {
       )
   }
 
-
-
-
-
-
-
   render() {
     return (
       <div className="App">
-        <p className="Table-header">Basic Table</p>
-        <Button>This is bootstrap button</Button>
+        <p className="Table-header">Blockchain Data Object</p>
+        <button type="button" class="btn btn-outline-primary">now</button>
+        <button type="button" class="btn btn-outline-secondary">1 hr</button>
+        <button type="button" class="btn btn-outline-success">24 hr</button>
+        <button type="button" class="btn btn-outline-danger">7 day</button>
+        <button type="button" class="btn btn-outline-primary">30 day</button>
+        <button type="button" class="btn btn-outline-info">1 year</button>
+        <button type="button" class="btn btn-outline-dark">YTD</button>
         {/* this Table below is a child component */}
         <Table data={this.state.users} />
+        <tr class="table-active">...</tr>
+
       </div>
     );
   }
