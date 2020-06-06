@@ -1,0 +1,11 @@
+.logo-class {
+    width: 25px;
+    height: 25px;
+}
+
+.priceDeltaPositive{
+    color: #34f531;
+}
+.priceDeltaNegative{
+    color: #ff0f0f;
+}

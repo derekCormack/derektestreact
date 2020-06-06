@@ -34,19 +34,21 @@
 </head>
 
 <body>
+
   <noscript>You need to enable JavaScript to run this app.</noscript>
-  <div id="root"></div>
-  <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+  <div id="root">
+    <!-- Here is our React app being loaded in the DOM -->
+    <!-- We can't communicate with Google scripts from react app!!! -->
+  </div>
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+  <div class="graph-class">
+    <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/2213_RC01/embed_loader.js"></script>
+    <script
+      type="text/javascript"> trends.embed.renderExploreWidget("TIMESERIES", { "comparisonItem": [{ "keyword": "ethereum", "geo": "US", "time": "now 1-d" }, { "keyword": "bitcoin", "geo": "US", "time": "now 1-d" }, { "keyword": "monero", "geo": "US", "time": "now 1-d" }, { "keyword": "cardano", "geo": "US", "time": "now 1-d" }, { "keyword": "hex", "geo": "US", "time": "now 1-d" }], "category": 0, "property": "" }, { "exploreQuery": "date=now%201-d&geo=US&q=ethereum,bitcoin,monero,cardano,hex", "guestPath": "https://trends.google.com:443/trends/embed/" }); </script>
+    <span class="m-3 font-weight-bold">WEEKLY GLOBAL INTEREST VELOCITY</span>
+    <script
+      type="text/javascript"> trends.embed.renderExploreWidget("GEO_MAP", { "comparisonItem": [{ "keyword": "bitcoin", "geo": "", "time": "now 7-d" }, { "keyword": "ethereum", "geo": "", "time": "now 7-d" }, { "keyword": "blockchain", "geo": "", "time": "now 7-d" }], "category": 0, "property": "youtube" }, { "exploreQuery": "date=now%207-d&gprop=youtube&q=bitcoin,ethereum,blockchain", "guestPath": "https://trends.google.com:443/trends/embed/" }); </script>
+  </div>
 </body>
-
 
 </html>

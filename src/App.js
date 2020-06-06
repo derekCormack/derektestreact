@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import './App.css';
 import Table from './components/Table'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Button from 'react-bootstrap/Button';
+// import Button from 'react-bootstrap/Button';
 
 class App extends Component {
 
   constructor() {
     super();
     this.state = {
-      users: ["btc","eth","ada","xmr"]
+      chainData: []
     };
   }
 
@@ -20,17 +20,18 @@ class App extends Component {
 
   //Using ComponentDidMount React hook lifecycle method to get data from API...
 
-  componentDidMount() {
+  componentDidMount(intervalValue = '1d') {
     //fetch method returns a promise!!! to fullfill that promise, we will use .then()
     var url = new URL("https://api.nomics.com/v1/currencies/ticker"),
-      params = { key: "06032060c502a5d376ad22deb9aec283", ids: "BTC,ETH,ADA,XMR", interval: "1h,1d,30d,365d,ytd", convert: "USD" }
+      params = { key: "06032060c502a5d376ad22deb9aec283", ids: "BTC,ETH,ADA,XMR,LTC,EOS,XTZ,ZEC,UBT,ZRX,KNC,USDT", interval: intervalValue, convert: "USD" }
     Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
     fetch(url)
       .then(res => res.json())
       .then(result => {
         //We get result when promise is fullfilled
+        let arrData = this.transformResponse(result, intervalValue);
         this.setState({
-          users: result
+          chainData: arrData
         });
         console.log("is data there? ", result);
       },
@@ -40,21 +41,50 @@ class App extends Component {
         }
       )
   }
+  transformResponse(dataHere, intervalValue) {
+    console.log("what is interval value? :", intervalValue);
+    let arrData = [];
+    if(dataHere.length > 0) {
+      dataHere.forEach(data => {  //dataHere is array of object! we need to get attribute values from object!!!
+        let transformedData = {
+          Rank: data['rank'],
+          Id: data['id'],
+          Logo: data['logo_url'],
+          PriceDelta: Number(data[intervalValue]['price_change_pct'] * 100).toFixed(2)  + " %",   
+          Price: "$ " + Number(data['price']).toFixed(3),
+          ATH: "$" + Number(data['high']).toFixed(2),
+          CircSupply: data['circulating_supply'],
+          MaxSupply: data['max_supply'] 
+        }
+
+        arrData.push(transformedData);
+      })
+    }
+    return arrData;
+  }
+
+  getButtonValue(interval){
+    console.log("Interval Value is: ", interval); 
+    this.componentDidMount(interval);
+  }
+
+
+  // I am here....
 
   render() {
     return (
       <div className="App">
-        <p className="Table-header">Blockchain Data Object</p>
-        <button type="button" class="btn btn-outline-primary">now</button>
-        <button type="button" class="btn btn-outline-secondary">1 hr</button>
-        <button type="button" class="btn btn-outline-success">24 hr</button>
-        <button type="button" class="btn btn-outline-danger">7 day</button>
-        <button type="button" class="btn btn-outline-primary">30 day</button>
-        <button type="button" class="btn btn-outline-info">1 year</button>
-        <button type="button" class="btn btn-outline-dark">YTD</button>
+        <p className="Table-header">Decentralized Blockchain Adoption Analytics</p>
+        {/* <button type="button" class="btn btn-outline-primary">now</button> */}
+        <button type="button" className="btn btn-outline-danger" onClick={ ()=> this.getButtonValue('1h')}>1 hr</button>
+        <button type="button" className="btn btn-outline-success" onClick={ ()=> this.getButtonValue('1d')}>24 hr</button>
+        {/* <button type="button" class="btn btn-outline-secondary">7 day</button> */}
+        <button type="button" className="btn btn-outline-primary" onClick={ ()=> this.getButtonValue('30d')}>30 day</button>
+        <button type="button" className="btn btn-outline-info" onClick={ ()=> this.getButtonValue('365d')}>1 year</button>
+        <button type="button" className="btn btn-outline-dark" onClick={ ()=> this.getButtonValue('ytd')}>YTD</button>
         {/* this Table below is a child component */}
-        <Table data={this.state.users} />
-        <tr class="table-active">...</tr>
+        <Table data={this.state.chainData} />
+     
 
       </div>
     );

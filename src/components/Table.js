@@ -1,34 +1,52 @@
-import React, { Component } from 'react';
-import {BootstrapTable,TableHeaderColumn} from 'react-bootstrap-table';
+import React from 'react';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import './Table.css';
 import '../../node_modules/react-bootstrap-table/css/react-bootstrap-table.css'
+
+function imageFormatter(cell, row) {
+  return <img className="logo-class" src={ cell } />;
+}
+
+
+function valueColor(cell) {
+  // cell = "0.05 %"
+  // cell.indexOf(" ") = 4
+  // cell.substring(4, 0) = "0.05"
+  // Number("0.05") = 0.05
+  if (Number(cell.substring(cell.indexOf(" "),0)) >= 0) {
+    return <span className="priceDeltaPositive">{ cell }</span>
+  } else {
+    return <span className="priceDeltaNegative">{ cell }</span>
+  }
+}
+
 
 const Table = (props) => {
   return (
     <div>
-      <BootstrapTable data={props.data}>
-        <TableHeaderColumn isKey dataField='rank'>
+      <BootstrapTable data={props.data} key={props.data.Rank} striped hover version='4'>
+        <TableHeaderColumn width="70px" dataAlign="center" isKey={true} dataField='Rank'>
           Rank
         </TableHeaderColumn>
-        <TableHeaderColumn dataField='name'>
-          Name
+        <TableHeaderColumn width="50px" dataField='Logo' dataFormat={ imageFormatter }>
         </TableHeaderColumn>
-        <TableHeaderColumn dataField='logo_url'>
-          Logo
+        <TableHeaderColumn width="70px" dataField='Id'>
+          Id
         </TableHeaderColumn>
-        <TableHeaderColumn dataField='price'>
+        <TableHeaderColumn width="90px" dataField='PriceDelta' dataFormat={ valueColor }>
+        </TableHeaderColumn>
+        <TableHeaderColumn width="120px"  dataField='Price'>
           Price
         </TableHeaderColumn>
-        <TableHeaderColumn dataField='high'>
+        <TableHeaderColumn dataField='ATH'>
           ATH
         </TableHeaderColumn>
-        <TableHeaderColumn dataField='circulating_supply'>
-          cirSupply
+        <TableHeaderColumn dataField='CircSupply'>
+          circSupply
         </TableHeaderColumn>
-        <TableHeaderColumn dataField='circulating_supply'>
+        <TableHeaderColumn dataField='MaxSupply'>
           maxSupply
         </TableHeaderColumn>
-        
       </BootstrapTable>
     </div>
   );
@@ -50,11 +68,12 @@ const Table = (props) => {
 //                 <tr class="table-light">test row one....................................</tr>
 //                 <tr class="table-info">test row one....................................</tr>
 //                 <tr class="table-active">test row one....................................</tr>
-//           </TableHeaderColumn>
+//           <tr class="table-active">...</tr>
+//          </TableHeaderColumn>
 //         </BootstrapTable>
 //       </div>
 //     );
 //   }
 // }
- 
+
 export default Table;
