@@ -1,12 +1,21 @@
 import React from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import './Table.css';
-import '../../node_modules/react-bootstrap-table/css/react-bootstrap-table.css'
+import '../../../node_modules/react-bootstrap-table/css/react-bootstrap-table.css'
 
 function imageFormatter(cell, row) {
-  return <img className="logo-class" src={ cell } />;
-}
+  //depending on which URL passed, we will use class name...
+  //graph: https://s2.coinmarketcap.com/generated/sparklines/web/7d/usd/1720.png
+  //logo: https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/btc.svg
+  let classes = []
+  if(cell.toString().includes("coinmarketcap")) {
+    classes.push("graph-class");
+  } else {
+    classes.push("logo-class");
+  }
 
+  return <img className={ classes.join(" ") } src={ cell } />;
+}
 
 function valueColor(cell) {
   // cell = "0.05 %"
@@ -38,14 +47,17 @@ const Table = (props) => {
         <TableHeaderColumn width="120px"  dataField='Price'>
           Price
         </TableHeaderColumn>
-        <TableHeaderColumn dataField='ATH'>
+        <TableHeaderColumn width="120px" dataField='ATH'>
           ATH
         </TableHeaderColumn>
-        <TableHeaderColumn dataField='CircSupply'>
-          circSupply
+        <TableHeaderColumn width="170px" dataField='TableGraph' dataFormat={ imageFormatter }>
+          Graph
         </TableHeaderColumn>
-        <TableHeaderColumn dataField='MaxSupply'>
-          maxSupply
+        <TableHeaderColumn width="120px" dataField='CircSupply'>
+          CircSupply
+        </TableHeaderColumn>
+        <TableHeaderColumn width="120px" dataField='MaxSupply'>
+          MaxSupply
         </TableHeaderColumn>
       </BootstrapTable>
     </div>
